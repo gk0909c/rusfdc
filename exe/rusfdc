@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'rusfdc'
+
+# introduce Thor
+Rusfdc.retrieve_fields

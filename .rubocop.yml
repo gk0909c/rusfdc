@@ -1,0 +1,16 @@
+AllCops:
+  Exclude:
+    - 'vendor/bundle/**/*'
+Metrics/LineLength:
+  Max: 100 
+Style/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: rails
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+Style/SingleLineMethods:
+  Exclude:
+    - 'spec/**/*.rb'
+AsciiComments:
+  Enabled: false
