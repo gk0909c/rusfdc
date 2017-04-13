@@ -10,4 +10,5 @@ This is operate sfdc data, metadata with ruby.
 development...
 
 ## future
++ apply hook?
 + cache session id

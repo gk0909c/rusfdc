@@ -1,4 +1,5 @@
 require 'thor'
+require 'rusfdc/partner'
 
 module Rusfdc
   class Client < Thor
@@ -11,8 +12,7 @@ module Rusfdc
     desc 'list_custom_object', 'show custom object list'
     method_option(*config_option)
     def list_custom_object
-      puts 'this is example command'
-      puts "specified config is #{options[:config]}"
+      Rusfdc::Partner.list_custom_object(options[:config])
     end
 
     desc 'list_custom_field', 'show specified custom object field list'
