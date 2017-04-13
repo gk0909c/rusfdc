@@ -9,3 +9,5 @@ This is operate sfdc data, metadata with ruby.
 ## now
 development...
 
+## future
++ cache session id

@@ -2,5 +2,6 @@
 
 require 'rusfdc'
 
-# introduce Thor
-Rusfdc.retrieve_fields
+# Rusfdc.retrieve_fields
+
+Rusfdc::Client.start
