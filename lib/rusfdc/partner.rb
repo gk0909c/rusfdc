@@ -1,14 +1,14 @@
 require 'rusfdc/connection'
 
 module Rusfdc
-  module Partner
-    module_function
-
-    def list_custom_object(config_file)
+  class Partner
+    def initialize(config_file)
       conn = Rusfdc::Connection.new(config_file)
-      client = conn.create_partner_client
+      @client = conn.create_partner_client
+    end
 
-      response = client.call(
+    def list_custom_object
+      response = @client.call(
         :describe_global
       )
       sobjects = response.body[:describe_global_response][:result][:sobjects]

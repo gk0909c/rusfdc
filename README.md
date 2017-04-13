@@ -6,9 +6,13 @@ This is operate sfdc data, metadata with ruby.
 
 ## Usage
 
+## sfdc
+### api version
+38.0
+
 ## now
 development...
 
 ## future
-+ apply hook?
++ apply hook
 + cache session id

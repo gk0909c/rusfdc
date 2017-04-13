@@ -12,7 +12,8 @@ module Rusfdc
     desc 'list_custom_object', 'show custom object list'
     method_option(*config_option)
     def list_custom_object
-      Rusfdc::Partner.list_custom_object(options[:config])
+      partner = Partner.new(options[:config])
+      partner.list_custom_object
     end
 
     desc 'list_custom_field', 'show specified custom object field list'

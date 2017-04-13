@@ -4,12 +4,13 @@ require 'savon'
 
 module Rusfdc
   class Connection
-    PARTNER_WSDL = 'wsdl/partner.wsdl'.freeze
+    WSDL_DIR = "#{File.dirname(__FILE__)}/../../wsdl".freeze
+    PARTNER_WSDL = "#{WSDL_DIR}/partner.wsdl".freeze
 
     def initialize(config_file)
       config = YAML.load_file(config_file)
       response = login_to_salesforce(config)
-      keep_connection_info(config['username'], response.body[:login_response][:result])
+      keep_connection_info(config, response.body[:login_response][:result])
     end
 
     def create_partner_client
@@ -33,8 +34,8 @@ module Rusfdc
         )
       end
 
-      def keep_connection_info(username, res)
-        @username = username
+      def keep_connection_info(config, res)
+        @username = config['username']
         @session_id = res[:session_id]
         @server_url = res[:server_url]
         @metadata_url = res[:metadata_server_url]
