@@ -16,5 +16,17 @@ module Rusfdc
         .select { |object| object[:custom] }
         .each { |object| puts "name: #{object[:name].ljust(20)} label: #{object[:label]}" }
     end
+
+    def list_custom_field(object_name)
+      response = @client.call(
+        :describe_s_object,
+        message: {
+          s_object_type: object_name
+        }
+      )
+      fields = response.body[:describe_s_object_response][:result][:fields]
+      fields
+        .each { |field| puts "name: #{field[:name].ljust(30)} label: #{field[:label]}" }
+    end
   end
 end
