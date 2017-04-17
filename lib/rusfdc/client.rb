@@ -2,6 +2,7 @@ require 'thor'
 require 'rusfdc/partner'
 
 module Rusfdc
+  # provide command line interface
   class Client < Thor
     config_option = [
       :config, {

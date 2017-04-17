@@ -1,0 +1,20 @@
+rusfdc_methods='list_custom_object list_object_field'
+
+_rusfdc() {
+  local cword pword opts
+
+  COMPREPLY=()
+  cword=${COMP_WORDS[COMP_CWORD]}
+  pword=${COMP_WORDS[COMP_CWORD - 1]} 
+
+  case ${pword} in
+    rusfdc) opts=$rusfdc_methods ;;
+    list_object_field) opts='--name' ;;
+    *) opts='' ;;
+  esac
+
+  COMPREPLY=( $(compgen -W '${opts}' -- $cword) )
+
+  return 0
+}
+complete -F _rusfdc rusfdc

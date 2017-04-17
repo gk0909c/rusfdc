@@ -1,6 +1,7 @@
 require 'rusfdc/connection'
 
 module Rusfdc
+  # provide salesforce operation via partner api
   class Partner
     def initialize(config_file)
       conn = Rusfdc::Connection.new(config_file)
