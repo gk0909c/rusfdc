@@ -3,10 +3,9 @@ require 'rusfdc/connection'
 
 RSpec.describe Rusfdc::Connection do
   let(:savon_cli) { spy('Savon Client') }
-  subject { Rusfdc::Connection.new('somepath') }
+  let(:conn) { Rusfdc::Connection.new('somepath') }
 
   before do
-    allow(Savon).to receive(:client).and_return(savon_cli)
     allow(YAML).to receive(:load_file).and_return('username' => 'user1@test.com')
   end
 
@@ -19,8 +18,10 @@ RSpec.describe Rusfdc::Connection do
         'https://server.com/meta/somepath'
       )
     end
+    subject { conn }
 
     before do
+      allow(Savon).to receive(:client).and_return(savon_cli)
       allow(savon_cli).to receive(:call).with(:login, anything).and_return(response)
       allow(response).to receive(:body).and_return(response_body)
     end
@@ -43,6 +44,24 @@ RSpec.describe Rusfdc::Connection do
 
     it 'keep server_instance id as instance variables' do
       expect(subject.instance_variable_get(:@server_instance)).to eq('https://server.com')
+    end
+  end
+
+  describe '#create_partner_client' do
+    subject { conn.create_partner_client }
+
+    before do
+      allow(Savon).to receive(:client).and_return(savon_cli)
+    end
+
+    it 'return Savon client with partner wsdl' do
+      savon_client_param = {
+        wsdl: Rusfdc::Connection::PARTNER_WSDL,
+        endpoint: anything,
+        soap_header: anything
+      }
+      expect(Savon).to receive(:client).with(savon_client_param)
+      expect(subject).to eq(savon_cli)
     end
   end
 end
