@@ -26,6 +26,16 @@ module Helpers
       }
     }
   end
+
+  def build_describe_s_object_response(fields)
+    {
+      describe_s_object_response: {
+        result: {
+          fields: fields
+        }
+      }
+    }
+  end
 end
 
 RSpec.configure do |c|

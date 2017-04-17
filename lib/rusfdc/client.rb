@@ -12,16 +12,18 @@ module Rusfdc
     desc 'list_custom_object', 'show custom object list'
     method_option(*config_option)
     def list_custom_object
-      partner = Partner.new(options[:config])
-      partner.list_custom_object
+      p = Partner.new(options[:config])
+      p.retrieve_custom_objects
+       .each { |object| puts "name: #{object[:name].ljust(20)} label: #{object[:label]}" }
     end
 
     desc 'list_custom_field', 'show specified custom object field list'
     method_option(*config_option)
     option :name, type: :string, aliases: '-n', desc: 'custom object name', required: true
-    def list_custom_field
-      partner = Partner.new(options[:config])
-      partner.list_custom_field(options[:name])
+    def list_object_field
+      p = Partner.new(options[:config])
+      p.retrieve_fields_of(options[:name])
+       .each { |field| puts "name: #{field[:name].ljust(30)} label: #{field[:label]}" }
     end
   end
 end
