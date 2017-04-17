@@ -39,5 +39,9 @@ module Helpers
 end
 
 RSpec.configure do |c|
+  c.mock_with :rspec do |m|
+    m.verify_partial_doubles = true
+  end
+
   c.include Helpers
 end

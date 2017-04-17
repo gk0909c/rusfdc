@@ -2,17 +2,17 @@ require 'spec_helper'
 require 'rusfdc/partner'
 
 RSpec.describe Rusfdc::Partner do
-  let(:savon_cli) { double('Savon Cli') }
+  let(:savon_cli) { instance_double(Savon::Client) }
   let(:partner) { Rusfdc::Partner.new('any path') }
 
   before do
-    conn = double('conn')
+    conn = instance_double(Rusfdc::Connection)
     allow(Rusfdc::Connection).to receive(:new).with(anything).and_return(conn)
     allow(conn).to receive(:create_partner_client).and_return(savon_cli)
   end
 
   describe '#retrieve_custom_objects' do
-    let(:res) { spy('Response') }
+    let(:res) { double('Response') }
     let(:response_body) do
       build_global_describe_response(
         [
@@ -37,7 +37,7 @@ RSpec.describe Rusfdc::Partner do
   end
 
   describe '#retrieve_fields_of' do
-    let(:res) { spy('Response') }
+    let(:res) { double('Response') }
     let(:response_body) do
       build_describe_s_object_response(
         [

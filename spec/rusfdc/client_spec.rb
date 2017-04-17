@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'rusfdc/client'
 
 RSpec.describe Rusfdc::Client do
-  let(:partner) { double('Partner') }
+  let(:partner) { instance_double(Rusfdc::Partner) }
 
   before do
     allow(Rusfdc::Partner).to receive(:new).with(anything).and_return(partner)
@@ -12,7 +12,7 @@ RSpec.describe Rusfdc::Client do
     subject { Rusfdc::Client.new.invoke(:list_custom_object, [], {}) }
 
     before do
-      allow(partner).to receive(:retrieve_custom_objects).and_return(
+      expect(partner).to receive(:retrieve_custom_objects).and_return(
         [
           { name: 'name1', label: 'label1', custom: true },
           { name: 'name2', label: 'label2', custom: false }
