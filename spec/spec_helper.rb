@@ -16,6 +16,16 @@ module Helpers
       }
     }
   end
+
+  def build_global_describe_response(objects)
+    {
+      describe_global_response: {
+        result: {
+          sobjects: objects
+        }
+      }
+    }
+  end
 end
 
 RSpec.configure do |c|
