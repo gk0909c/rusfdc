@@ -14,6 +14,7 @@ This is operate sfdc data, metadata with ruby.
 development...
 
 ## future
-+ when login fail spec
 + apply hook
 + cache session id
++ when login fail spec
++ use webmock
