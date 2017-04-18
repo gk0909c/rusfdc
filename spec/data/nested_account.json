@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "attributes": {"type": "Account", "referenceId": "refA1"},
+      "Name": "NestedAccount",
+      "Contacts": {
+        "records": [
+          {
+            "attributes": {"type": "Contact", "referenceId": "refC1"},
+            "lastname": "NestedContact"
+          }
+        ]
+      }
+    }
+  ]
+}

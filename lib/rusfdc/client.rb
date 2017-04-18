@@ -1,5 +1,8 @@
+require 'json'
 require 'thor'
+require 'rusfdc/connection'
 require 'rusfdc/partner'
+require 'rusfdc/rest'
 
 module Rusfdc
   # provide command line interface
@@ -26,5 +29,28 @@ module Rusfdc
       p.retrieve_fields_of(options[:name])
        .each { |field| puts "name: #{field[:name].ljust(30)} label: #{field[:label]}" }
     end
+
+    desc 'create_nested_record', 'create nested record from json file'
+    method_option(*config_option)
+    option :name, type: :string, aliases: '-n', desc: 'parent custom object name', required: true
+    option :file, type: :string, aliases: '-f', desc: 'json file path', required: true
+    def create_nested_record
+      c = Connection.new(options[:config])
+      r = c.create_rest_client
+
+      json_data = JSON.parse(IO.read(options[:file]))
+      res = r.create_nested_record(options[:name], json_data)
+
+      out_file = "result_of_create_nested_record_#{DateTime.now.strftime('%Y%m%d%H%M%S')}.json"
+      out_pretty_json_from_string(res, out_file)
+    end
+
+    private
+
+      def out_pretty_json(json, filename)
+        File.open("./#{filename}", 'w') do |f|
+          f.write(JSON.pretty_generate(json))
+        end
+      end
   end
 end

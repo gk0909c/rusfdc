@@ -41,10 +41,6 @@ RSpec.describe Rusfdc::Connection do
     it 'keep metadata_server_url id as instance variables' do
       expect(subject.instance_variable_get(:@metadata_url)).to eq('https://server.com/meta/somepath')
     end
-
-    it 'keep server_instance id as instance variables' do
-      expect(subject.instance_variable_get(:@server_instance)).to eq('https://server.com')
-    end
   end
 
   describe '#create_partner_client' do

@@ -10,3 +10,5 @@
 /vendor/bundle
 /connection.yml
 *.gem
+result*.json
+

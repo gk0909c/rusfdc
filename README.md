@@ -19,6 +19,8 @@ This is operate sfdc data, metadata with ruby.
 development...
 
 ## future
++ change partner is created from Connection
+  + then, need method before hook
 + usage document
 + cache session id
 + when login fail spec
