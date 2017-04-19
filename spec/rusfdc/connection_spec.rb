@@ -1,9 +1,6 @@
 require 'spec_helper'
-require 'rusfdc/connection'
 
 RSpec.describe Rusfdc::Connection do
-  include Savon::SpecHelper
-
   let(:conn) { Rusfdc::Connection.new('somepath') }
 
   before(:all) { savon.mock! }
@@ -40,29 +37,6 @@ RSpec.describe Rusfdc::Connection do
 
     it 'keep server_instance' do
       expect(subject.instance_variable_get(:@server_instance)).to eq('https://server.com')
-    end
-  end
-
-  # describe '#create_partner_client' do
-  #   subject { conn.create_partner_client }
-  #
-  #   it 'return Savon client with partner wsdl' do
-  #     savon_client_param = {
-  #       wsdl: Rusfdc::Connection::PARTNER_WSDL,
-  #       endpoint: anything,
-  #       soap_header: anything
-  #     }
-  #     expect(Savon).to receive(:client).with(savon_client_param)
-  #     expect(subject).to eq(savon_cli)
-  #   end
-  # end
-
-  describe '#create_rest_client' do
-    it 'return Rusfdc::Rest instance with server instance and session id' do
-      allow(Rusfdc::Rest).to receive(:new)
-      conn.create_rest_client
-
-      expect(Rusfdc::Rest).to have_received(:new).with('https://server.com', 'test_session_id')
     end
   end
 end

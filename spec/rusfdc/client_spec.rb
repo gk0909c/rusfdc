@@ -2,8 +2,6 @@ require 'spec_helper'
 require 'rusfdc/client'
 
 RSpec.describe Rusfdc::Client do
-  include Savon::SpecHelper
-
   before(:all) { savon.mock! }
   after(:all)  { savon.unmock! }
   before do

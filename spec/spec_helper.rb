@@ -46,5 +46,6 @@ RSpec.configure do |c|
     m.verify_partial_doubles = true
   end
 
+  c.include Savon::SpecHelper
   c.include Helpers
 end

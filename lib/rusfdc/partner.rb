@@ -1,11 +1,14 @@
-require 'rusfdc/connection'
+require 'savon'
 
 module Rusfdc
   # provide salesforce operation via partner api
   class Partner
-    def initialize(config_file)
-      conn = Rusfdc::Connection.new(config_file)
-      @client = conn.create_partner_client
+    def initialize(server_url, session_id)
+      @client = Savon.client(
+        wsdl: Rusfdc::PARTNER_WSDL,
+        endpoint: server_url,
+        soap_header: { 'tns:SessionHeader' => { 'tns:sessionId' => session_id } }
+      )
     end
 
     def retrieve_custom_objects

@@ -6,9 +6,6 @@ require 'rusfdc/rest'
 module Rusfdc
   # provide salesforce connection
   class Connection
-    WSDL_DIR = "#{File.dirname(__FILE__)}/../../wsdl".freeze
-    PARTNER_WSDL = "#{WSDL_DIR}/partner.wsdl".freeze
-
     def initialize(config_file)
       config = YAML.load_file(config_file)
       response = login_to_salesforce(config)
@@ -17,11 +14,7 @@ module Rusfdc
     end
 
     def create_partner_client
-      Savon.client(
-        wsdl: PARTNER_WSDL,
-        endpoint: @server_url,
-        soap_header: { 'tns:SessionHeader' => { 'tns:sessionId' => @session_id } }
-      )
+      Rusfdc::Partner.new(@server_url, @session_id)
     end
 
     def create_rest_client
@@ -31,7 +24,7 @@ module Rusfdc
     private
 
       def login_to_salesforce(config)
-        client = Savon.client(wsdl: PARTNER_WSDL, endpoint: config['endpoint'])
+        client = Savon.client(wsdl: Rusfdc::PARTNER_WSDL, endpoint: config['endpoint'])
         client.call(
           :login,
           message: {

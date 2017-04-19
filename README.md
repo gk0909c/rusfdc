@@ -24,5 +24,4 @@ development...
 + usage document
 + cache session id
 + when login fail spec
-+ use webmock
 + apply hook
