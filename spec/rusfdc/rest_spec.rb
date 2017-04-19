@@ -1,38 +1,46 @@
 require 'spec_helper'
+require 'webmock/rspec'
 require 'rusfdc/connection'
 require 'rusfdc/rest'
+require 'json'
+require 'httpclient'
 
 RSpec.describe Rusfdc::Rest do
-  let(:savon_cli) { spy('Savon Client') }
-  let(:conn) { Rusfdc::Connection.new('somepath') }
+  let(:server) { 'https://server.com' }
+  let(:rest) { Rusfdc::Rest.new(server, 'session') }
 
-  before do
-    allow(YAML).to receive(:load_file).and_return('username' => 'user1@test.com')
-  end
+  describe '#create_rest_client' do
+    let(:endpoint) { "#{server}/services/data/v39.0/composite/tree/Account/" }
+    subject { rest.create_nested_record('Account', test: 'test') }
 
-  describe '#initialize' do
-    let(:response) { spy('Response') }
-    let(:response_body) do
-      build_login_response(
-        'test_session_id',
-        'https://server.com/soap/somepath',
-        'https://server.com/meta/somepath'
-      )
+    context 'when http code is 200' do
+      let(:res) do
+        {
+          hasErrors: false,
+          results: [
+            { referenceId: 'refA1', id: '0012800001GbZVtAAN' },
+            { referenceId: 'refC1', id: '0032800000y5BauAAE' }
+          ]
+        }
+      end
+
+      before do
+        stub_request(:post, endpoint).to_return(body: res.to_json, status: 200)
+      end
+
+      it 'return hash response' do
+        expect(subject.class).to eq(Hash)
+      end
     end
-    subject { conn.create_rest_client }
 
-    before do
-      allow(Savon).to receive(:client).and_return(savon_cli)
-      allow(savon_cli).to receive(:call).with(:login, anything).and_return(response)
-      allow(response).to receive(:body).and_return(response_body)
-    end
+    context 'when http code is 400' do
+      before do
+        stub_request(:post, endpoint).to_return(body: '{}', status: 400)
+      end
 
-    it 'keep server instance as instance variables' do
-      expect(subject.instance_variable_get(:@server_instance)).to eq('https://server.com')
-    end
-
-    it 'keep session id as instance variables' do
-      expect(subject.instance_variable_get(:@session_id)).to eq('test_session_id')
+      it 'raise BadResponseError' do
+        expect { subject }.to raise_error(HTTPClient::BadResponseError)
+      end
     end
   end
 end

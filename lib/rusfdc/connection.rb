@@ -13,6 +13,7 @@ module Rusfdc
       config = YAML.load_file(config_file)
       response = login_to_salesforce(config)
       keep_connection_info(config, response.body[:login_response][:result])
+      gen_server_instance
     end
 
     def create_partner_client
@@ -24,7 +25,7 @@ module Rusfdc
     end
 
     def create_rest_client
-      Rusfdc::Rest.new(@server_url, @session_id)
+      Rusfdc::Rest.new(@server_instance, @session_id)
     end
 
     private
@@ -45,6 +46,11 @@ module Rusfdc
         @session_id = res[:session_id]
         @server_url = res[:server_url]
         @metadata_url = res[:metadata_server_url]
+      end
+
+      def gen_server_instance
+        urls = @server_url.split('/')
+        @server_instance = [urls[0], '//', urls[2]].join
       end
   end
 end

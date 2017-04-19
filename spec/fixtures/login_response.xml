@@ -1,0 +1,11 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <login_response>
+      <result>
+        <session_id>test_session_id</session_id>
+        <server_url>https://server.com/soap/somepath</server_url>
+        <metadata_server_url>https://server.meta.com/meta/somepath</metadata_server_url>
+      </result>
+    </login_response>
+  </soap:Body>
+</soap:Envelope>
