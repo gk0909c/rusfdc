@@ -45,8 +45,8 @@ RSpec.describe Rusfdc::Rest do
   describe '#generate_nested_record_template' do
     let(:fixture) { 'spec/fixtures/rest/AccountWithContact.json' }
     let(:expected_template) { JSON.parse(IO.read(fixture), symbolize_names: true) }
-    # TODO: to use struct
-    subject { rest.generate_nested_record_template('Account', 'Contact', 'Contacts') }
+    let(:param) { Rusfdc::NestedRecordParam.new('Account', 'Contact', 'Contacts') }
+    subject { rest.generate_nested_record_template(param) }
 
     it 'return template as Hash' do
       expect(subject).to eq(expected_template)

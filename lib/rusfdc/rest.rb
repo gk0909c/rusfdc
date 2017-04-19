@@ -18,19 +18,12 @@ module Rusfdc
       JSON.parse(res)
     end
 
-    def generate_nested_record_template(parent_name, child_name, relation_name)
-      child = [{
-        attributes: { type: child_name, referenceId: 'child id' },
-        Name: 'child name'
-      }]
-
-      parent = [{
-        attributes: { type: parent_name, referenceId: 'parent id' },
-        Name: 'parent name',
-        relation_name.to_sym => { records: child }
-      }]
-
-      { records: parent }
+    def generate_nested_record_template(param)
+      child = record_template(param.child_name, 'child id', Name: 'child name')
+      relation_name = param.relation_name ? param.relation_name.to_sym : 'SomeRelation'.to_sym
+      parent = record_template(param.parent_name, 'parent id', Name: 'parent name')
+      parent[relation_name] = { records: [child] }
+      { records: [parent] }
     end
 
     private
@@ -40,6 +33,13 @@ module Rusfdc
           Authorization: ['Bearer ', @session_id].join,
           'Content-Type' => 'application/json'
         }
+      end
+
+      def record_template(type, ref_id, values)
+        template = {
+          attributes: { type: type, referenceId: ref_id }
+        }
+        template.merge(values)
       end
   end
 end
