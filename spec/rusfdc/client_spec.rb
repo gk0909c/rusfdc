@@ -79,4 +79,12 @@ RSpec.describe Rusfdc::Client do
       expect(IO.read(out_file)).to eq(%({\n  "result": "success"\n}))
     end
   end
+
+  describe '#generate_nested_record_template' do
+    let(:parent) { 'Account' }
+    let(:child) { 'Contact' }
+    let(:out_file) { "#{parent}With#{child}.json" }
+
+    it 'is a pending'
+  end
 end

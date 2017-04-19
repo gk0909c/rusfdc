@@ -1,0 +1,16 @@
+{
+  "records": [
+    {
+      "attributes": {"type": "Account", "referenceId": "parent id"},
+      "Name": "parent name",
+      "Contacts": {
+        "records": [
+          {
+            "attributes": {"type": "Contact", "referenceId": "child id"},
+            "Name": "child name"
+          }
+        ]
+      }
+    }
+  ]
+}

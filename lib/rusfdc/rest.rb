@@ -18,6 +18,21 @@ module Rusfdc
       JSON.parse(res)
     end
 
+    def generate_nested_record_template(parent_name, child_name, relation_name)
+      child = [{
+        attributes: { type: child_name, referenceId: 'child id' },
+        Name: 'child name'
+      }]
+
+      parent = [{
+        attributes: { type: parent_name, referenceId: 'parent id' },
+        Name: 'parent name',
+        relation_name.to_sym => { records: child }
+      }]
+
+      { records: parent }
+    end
+
     private
 
       def rest_header
