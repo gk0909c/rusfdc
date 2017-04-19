@@ -40,8 +40,25 @@ module Rusfdc
       json_data = JSON.parse(IO.read(options[:file]))
       res = rest.create_nested_record(options[:name], json_data)
 
-      out_file = "result_of_create_nested_record_#{DateTime.now.strftime('%Y%m%d%H%M%S')}.json"
+      out_file = "result_of_create_nested_record_#{now_str}.json"
       out_pretty_json(res, out_file)
+
+      puts "success! result is in #{out_file}"
+    end
+
+    desc 'generate_nested_record_template', 'generate template file for create_nested_record'
+    method_option(*config_option)
+    option :parent, type: :string, desc: 'parent custom object name', required: true
+    option :child, type: :string, desc: 'child custom object name', required: true
+    def generate_nested_record_template
+      parent = options[:parent]
+      child = options[:child]
+      p, r = create_partner_and_rest_client(options[:config])
+
+      param = create_nested_record_param(p, parent, child)
+      template = r.generate_nested_record_template(param)
+      out_file = "#{parent}_and_#{child}_#{now_str}.json"
+      out_pretty_json(template, out_file)
 
       puts "success! result is in #{out_file}"
     end
@@ -58,10 +75,24 @@ module Rusfdc
         c.create_rest_client
       end
 
+      def create_partner_and_rest_client(config)
+        c = Connection.new(config)
+        [c.create_partner_client, c.create_rest_client]
+      end
+
+      def create_nested_record_param(partner, parent, child)
+        relationship = partner.get_relationship_name_between(parent, child)
+        Rusfdc::NestedRecordParam.new(parent, child, relationship)
+      end
+
       def out_pretty_json(json, filename)
         File.open("./#{filename}", 'w') do |f|
           f.write(JSON.pretty_generate(json))
         end
+      end
+
+      def now_str
+        DateTime.now.strftime('%Y%m%d%H%M%S')
       end
   end
 end

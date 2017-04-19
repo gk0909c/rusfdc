@@ -20,6 +20,9 @@ development...
 
 ## future
 + generate nested record template
+  + automate require field
+  + bash completion
++ how use connection in client?
 + spec when nested record create has errors
 + usage document
 + cache session id

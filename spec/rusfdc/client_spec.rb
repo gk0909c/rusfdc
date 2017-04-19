@@ -6,18 +6,13 @@ RSpec.describe Rusfdc::Client do
   after(:all)  { savon.unmock! }
   before do
     allow(YAML).to receive(:load_file).and_return('username' => 'user1@test.com')
-    message = { username: 'user1@test.com', password: '' }
-    fixture = File.read('spec/fixtures/login_response.xml')
-    savon.expects(:login).with(message: message).returns(fixture)
+    expect_login
   end
 
   describe '#list_custom_object' do
     subject { Rusfdc::Client.new.invoke(:list_custom_object, [], {}) }
 
-    before do
-      fixture = File.read('spec/fixtures/describe_global_response.xml')
-      savon.expects(:describe_global).returns(fixture)
-    end
+    before { expect_describe_global }
 
     it 'print object list to standard out' do
       out_format = "name: %s label: %s\n"
@@ -32,11 +27,7 @@ RSpec.describe Rusfdc::Client do
     let(:target) { 'Obj__c' }
     subject { Rusfdc::Client.new.invoke(:list_object_field, [], name: target) }
 
-    before do
-      message = { s_object_type: target }
-      fixture = File.read('spec/fixtures/describe_s_object_response.xml')
-      savon.expects(:describe_s_object).with(message: message).returns(fixture)
-    end
+    before { expect_describe_s_object_with(target) }
 
     it 'print field list to standard out' do
       out_format = "name: %s label: %s\n"
@@ -60,9 +51,7 @@ RSpec.describe Rusfdc::Client do
       allow(IO).to receive(:read).with('test.json').and_return('{"fake":"json"}')
       stub_request(:post, endpoint).to_return(body: '{"result":"success"}', status: 200)
     end
-    after do
-      File.delete(out_file)
-    end
+    after { File.delete(out_file) }
 
     it 'out success and filename' do
       output = "success! result is in #{out_file}\n"
@@ -81,10 +70,22 @@ RSpec.describe Rusfdc::Client do
   end
 
   describe '#generate_nested_record_template' do
-    let(:parent) { 'Account' }
-    let(:child) { 'Contact' }
-    let(:out_file) { "#{parent}With#{child}.json" }
+    let(:parent) { 'Obj__c' }
+    let(:child) { 'ChildObj2__c' }
+    let(:out_file) { "#{parent}_and_#{child}_20170401120000.json" }
+    let(:param) { { parent: parent, child: child } }
+    subject { Rusfdc::Client.new.invoke(:generate_nested_record_template, [], param) }
 
-    it 'is a pending'
+    before do
+      Timecop.freeze(Time.local(2017, 4, 1, 12, 0, 0))
+      expect_describe_s_object_with(parent)
+    end
+    after { File.delete(out_file) }
+
+    it 'create nested record template file' do
+      output = "success! result is in #{out_file}\n"
+      expect { subject }.to output(output).to_stdout
+      expect(File.exist?(out_file)).to be_truthy
+    end
   end
 end
