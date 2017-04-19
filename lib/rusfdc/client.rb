@@ -21,7 +21,7 @@ module Rusfdc
        .each { |object| puts "name: #{object[:name].ljust(20)} label: #{object[:label]}" }
     end
 
-    desc 'list_custom_field', 'show specified custom object field list'
+    desc 'list_object_field', 'show specified custom object field list'
     method_option(*config_option)
     option :name, type: :string, aliases: '-n', desc: 'custom object name', required: true
     def list_object_field
