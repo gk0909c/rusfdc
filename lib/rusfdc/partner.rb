@@ -37,5 +37,13 @@ module Rusfdc
     def retrieve_child_relationships_of(object_name)
       retrieve_describe_of(object_name)[:child_relationships]
     end
+
+    def get_relationship_name_between(parent, child)
+      relationship = retrieve_child_relationships_of(parent)
+                     .find { |r| r[:child_s_object] == child }
+
+      raise "found no relation between #{parent} and {#child}" unless relationship
+      relationship[:relationship_name]
+    end
   end
 end

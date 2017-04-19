@@ -5,7 +5,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'rusfdc'
 require 'timecop'
 require 'webmock/rspec'
-require 'savon/mock/spec_helper'
+require 'savon_helper'
 
 module Helpers
   def build_login_response(session_id, server_url, metadata_server_url)
@@ -48,4 +48,5 @@ RSpec.configure do |c|
 
   c.include Savon::SpecHelper
   c.include Helpers
+  c.include SavonHelper
 end

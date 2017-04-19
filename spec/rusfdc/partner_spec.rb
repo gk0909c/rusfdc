@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# see spec/fixtures/*.xml about expect response xml data
 RSpec.describe Rusfdc::Partner do
   let(:partner) { Rusfdc::Partner.new('server url', 'session id') }
 
@@ -10,8 +11,7 @@ RSpec.describe Rusfdc::Partner do
     subject { partner.retrieve_custom_objects }
 
     before do
-      fixture = File.read('spec/fixtures/describe_global_response.xml')
-      savon.expects(:describe_global).returns(fixture)
+      expect_describe_global
     end
 
     it 'select custom objects' do
@@ -26,9 +26,7 @@ RSpec.describe Rusfdc::Partner do
     subject { partner.retrieve_fields_of(target) }
 
     before do
-      message = { s_object_type: target }
-      fixture = File.read('spec/fixtures/describe_s_object_response.xml')
-      savon.expects(:describe_s_object).with(message: message).returns(fixture)
+      expect_describe_s_object_with(target)
     end
 
     it 'return fields of object' do
@@ -43,15 +41,39 @@ RSpec.describe Rusfdc::Partner do
     subject { partner.retrieve_child_relationships_of(target) }
 
     before do
-      message = { s_object_type: target }
-      fixture = File.read('spec/fixtures/describe_s_object_response.xml')
-      savon.expects(:describe_s_object).with(message: message).returns(fixture)
+      expect_describe_s_object_with(target)
     end
 
     it 'return child relationships of object' do
       expect(subject.length).to eq(2)
       expect(subject[0]).to eq(child_s_object: 'ChildObj1__c', relationship_name: 'ChildObj1s__r')
       expect(subject[1]).to eq(child_s_object: 'ChildObj2__c', relationship_name: 'ChildObj2s__r')
+    end
+  end
+
+  describe '#get_relationship_name_between' do
+    let(:target) { 'Obj__c' }
+
+    before do
+      expect_describe_s_object_with(target)
+    end
+
+    context 'when found relation' do
+      subject { partner.get_relationship_name_between(target, 'ChildObj2__c') }
+
+      it 'return relationship name' do
+        expect(subject).to eq('ChildObj2s__r')
+      end
+    end
+
+    context 'when not found relation' do
+      let(:child) { 'ChildObj99__c' }
+      subject { partner.get_relationship_name_between(target, 'ChildObj99__c') }
+
+      it 'raise error' do
+        message = "found no relation between #{target} and {#child}"
+        expect { subject }.to raise_error(RuntimeError, message)
+      end
     end
   end
 end
