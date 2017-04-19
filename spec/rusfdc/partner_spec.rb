@@ -31,10 +31,27 @@ RSpec.describe Rusfdc::Partner do
       savon.expects(:describe_s_object).with(message: message).returns(fixture)
     end
 
-    it 'select custom objects' do
+    it 'return fields of object' do
       expect(subject.length).to eq(2)
       expect(subject[0]).to eq(name: 'Field1__c', label: 'Field1_label')
       expect(subject[1]).to eq(name: 'Field2__c', label: 'Field2_label')
+    end
+  end
+
+  describe '#retrieve_child_relationships_of' do
+    let(:target) { 'Obj__c' }
+    subject { partner.retrieve_child_relationships_of(target) }
+
+    before do
+      message = { s_object_type: target }
+      fixture = File.read('spec/fixtures/describe_s_object_response.xml')
+      savon.expects(:describe_s_object).with(message: message).returns(fixture)
+    end
+
+    it 'return child relationships of object' do
+      expect(subject.length).to eq(2)
+      expect(subject[0]).to eq(child_s_object: 'ChildObj1__c', relationship_name: 'ChildObj1s__r')
+      expect(subject[1]).to eq(child_s_object: 'ChildObj2__c', relationship_name: 'ChildObj2s__r')
     end
   end
 end

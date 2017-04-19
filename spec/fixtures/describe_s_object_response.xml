@@ -3,13 +3,21 @@
     <describe_s_object_response>
       <result>
         <fields>
-            <name>Field1__c</name>
-            <label>Field1_label</label>
-          </fields>
+          <name>Field1__c</name>
+          <label>Field1_label</label>
+        </fields>
         <fields>
-            <name>Field2__c</name>
-            <label>Field2_label</label>
-          </fields>
+          <name>Field2__c</name>
+          <label>Field2_label</label>
+        </fields>
+        <childRelationships>
+          <childSObject>ChildObj1__c</childSObject>
+          <relationshipName>ChildObj1s__r</relationshipName>
+        </childRelationships>
+        <childRelationships>
+          <childSObject>ChildObj2__c</childSObject>
+          <relationshipName>ChildObj2s__r</relationshipName>
+        </childRelationships>
       </result>
     </describe_s_object_response>
   </soap:Body>

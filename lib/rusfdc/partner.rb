@@ -20,14 +20,22 @@ module Rusfdc
         .select { |object| object[:custom] }
     end
 
-    def retrieve_fields_of(object_name)
+    def retrieve_describe_of(object_name)
       response = @client.call(
         :describe_s_object,
         message: {
           s_object_type: object_name
         }
       )
-      response.body[:describe_s_object_response][:result][:fields]
+      response.body[:describe_s_object_response][:result]
+    end
+
+    def retrieve_fields_of(object_name)
+      retrieve_describe_of(object_name)[:fields]
+    end
+
+    def retrieve_child_relationships_of(object_name)
+      retrieve_describe_of(object_name)[:child_relationships]
     end
   end
 end
