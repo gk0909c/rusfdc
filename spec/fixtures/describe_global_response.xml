@@ -1,0 +1,23 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <describe_global_response>
+      <result>
+        <sobjects>
+            <name>Obj1__c</name>
+            <label>Obj1_label</label>
+            <custom>true</custom>
+          </sobjects>
+        <sobjects>
+            <name>Obj2__c</name>
+            <label>Obj2_label</label>
+            <custom>false</custom>
+          </sobjects>
+        <sobjects>
+            <name>Obj3__c</name>
+            <label>Obj3_label</label>
+            <custom>true</custom>
+        </sobjects>
+      </result>
+    </describe_global_response>
+  </soap:Body>
+</soap:Envelope>

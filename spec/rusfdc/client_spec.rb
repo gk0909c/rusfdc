@@ -4,8 +4,6 @@ require 'rusfdc/client'
 RSpec.describe Rusfdc::Client do
   include Savon::SpecHelper
 
-  let(:partner) { instance_double(Rusfdc::Partner) }
-
   before(:all) { savon.mock! }
   after(:all)  { savon.unmock! }
   before do
@@ -13,47 +11,39 @@ RSpec.describe Rusfdc::Client do
     message = { username: 'user1@test.com', password: '' }
     fixture = File.read('spec/fixtures/login_response.xml')
     savon.expects(:login).with(message: message).returns(fixture)
-
-    allow(Rusfdc::Partner).to receive(:new).with(anything).and_return(partner)
   end
 
   describe '#list_custom_object' do
     subject { Rusfdc::Client.new.invoke(:list_custom_object, [], {}) }
 
     before do
-      expect(partner).to receive(:retrieve_custom_objects).and_return(
-        [
-          { name: 'name1', label: 'label1', custom: true },
-          { name: 'name2', label: 'label2', custom: false }
-        ]
-      )
+      fixture = File.read('spec/fixtures/describe_global_response.xml')
+      savon.expects(:describe_global).returns(fixture)
     end
 
     it 'print object list to standard out' do
       out_format = "name: %s label: %s\n"
-      out1 = format(out_format, 'name1'.ljust(20), 'label1')
-      out2 = format(out_format, 'name2'.ljust(20), 'label2')
+      out1 = format(out_format, 'Obj1__c'.ljust(20), 'Obj1_label')
+      out2 = format(out_format, 'Obj3__c'.ljust(20), 'Obj3_label')
 
       expect { subject }.to output([out1, out2].join).to_stdout
     end
   end
 
   describe '#list_custom_field' do
-    subject { Rusfdc::Client.new.invoke(:list_object_field, [], name: 'Obj__c') }
+    let(:target) { 'Obj__c' }
+    subject { Rusfdc::Client.new.invoke(:list_object_field, [], name: target) }
 
     before do
-      expect(partner).to receive(:retrieve_fields_of).with(anything).and_return(
-        [
-          { name: 'name1', label: 'label1' },
-          { name: 'name2', label: 'label2' }
-        ]
-      )
+      message = { s_object_type: target }
+      fixture = File.read('spec/fixtures/describe_s_object_response.xml')
+      savon.expects(:describe_s_object).with(message: message).returns(fixture)
     end
 
     it 'print field list to standard out' do
       out_format = "name: %s label: %s\n"
-      out1 = format(out_format, 'name1'.ljust(30), 'label1')
-      out2 = format(out_format, 'name2'.ljust(30), 'label2')
+      out1 = format(out_format, 'Field1__c'.ljust(30), 'Field1_label')
+      out2 = format(out_format, 'Field2__c'.ljust(30), 'Field2_label')
 
       expect { subject }.to output([out1, out2].join).to_stdout
     end

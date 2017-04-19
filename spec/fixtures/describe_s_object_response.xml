@@ -1,0 +1,16 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <describe_s_object_response>
+      <result>
+        <fields>
+            <name>Field1__c</name>
+            <label>Field1_label</label>
+          </fields>
+        <fields>
+            <name>Field2__c</name>
+            <label>Field2_label</label>
+          </fields>
+      </result>
+    </describe_s_object_response>
+  </soap:Body>
+</soap:Envelope>
