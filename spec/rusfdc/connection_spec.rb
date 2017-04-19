@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'savon/mock/spec_helper'
 require 'rusfdc/connection'
 
 RSpec.describe Rusfdc::Connection do

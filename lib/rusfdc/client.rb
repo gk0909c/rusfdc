@@ -35,17 +35,23 @@ module Rusfdc
     option :name, type: :string, aliases: '-n', desc: 'parent custom object name', required: true
     option :file, type: :string, aliases: '-f', desc: 'json file path', required: true
     def create_nested_record
-      c = Connection.new(options[:config])
-      r = c.create_rest_client
+      rest = create_rest_client(options[:config])
 
       json_data = JSON.parse(IO.read(options[:file]))
-      res = r.create_nested_record(options[:name], json_data)
+      res = rest.create_nested_record(options[:name], json_data)
 
       out_file = "result_of_create_nested_record_#{DateTime.now.strftime('%Y%m%d%H%M%S')}.json"
-      out_pretty_json_from_string(res, out_file)
+      out_pretty_json(res, out_file)
+
+      puts "success! result is in #{out_file}"
     end
 
     private
+
+      def create_rest_client(config)
+        c = Connection.new(config)
+        c.create_rest_client
+      end
 
       def out_pretty_json(json, filename)
         File.open("./#{filename}", 'w') do |f|

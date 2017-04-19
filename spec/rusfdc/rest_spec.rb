@@ -1,9 +1,7 @@
 require 'spec_helper'
-require 'webmock/rspec'
 require 'rusfdc/connection'
 require 'rusfdc/rest'
 require 'json'
-require 'httpclient'
 
 RSpec.describe Rusfdc::Rest do
   let(:server) { 'https://server.com' }
