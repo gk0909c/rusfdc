@@ -1,4 +1,7 @@
-rusfdc_methods='list_custom_object list_object_field'
+rusfdc_methods='list_custom_object list_object_field create_nested_record generate_nested_record_template'
+list_object_field_opts='--name'
+create_nested_record_opts='--name --file'
+generate_nested_record_template_opts='--parent --child'
 
 _rusfdc() {
   local cword pword opts
@@ -6,12 +9,23 @@ _rusfdc() {
   COMPREPLY=()
   cword=${COMP_WORDS[COMP_CWORD]}
   pword=${COMP_WORDS[COMP_CWORD - 1]} 
+  command=${COMP_WORDS[1]} 
 
   case ${pword} in
     rusfdc) opts=$rusfdc_methods ;;
-    list_object_field) opts='--name' ;;
+    list_object_field) opts=$list_object_field_opts ;;
+    create_nested_record) opts=$create_nested_record_opts ;;
+    generate_nested_record_template) opts=$generate_nested_record_template_opts ;;
     *) opts='' ;;
   esac
+
+  if [ -z "$opts" ]; then
+    case ${command} in
+      list_object_field) opts=$list_object_field_opts ;;
+      create_nested_record) opts=$create_nested_record_opts ;;
+      generate_nested_record_template) opts=$generate_nested_record_template_opts ;;
+    esac
+  fi
 
   COMPREPLY=( $(compgen -W '${opts}' -- $cword) )
 
