@@ -19,9 +19,7 @@ This is operate sfdc data, metadata with ruby.
 development...
 
 ## future
-+ generate nested record template
-  + automate require field
-  + bash completion
++ add class deal with describe sobject 
 + spec when nested record create has errors
 + usage document
 + cache session id
