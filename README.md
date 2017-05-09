@@ -8,6 +8,7 @@ This is operate sfdc data, metadata with ruby.
 ## Installation
 
 ## Usage
+see help by `rusfdc help`
 ### bash completion
 `source rusfdc_bash_completion` or put rusfdc_bash_completion file to /etc/bash_completion.d
 
