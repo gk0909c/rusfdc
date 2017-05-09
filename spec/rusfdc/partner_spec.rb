@@ -30,9 +30,12 @@ RSpec.describe Rusfdc::Partner do
     end
 
     it 'return fields of object' do
-      expect(subject.length).to eq(2)
-      expect(subject[0]).to eq(name: 'Field1__c', label: 'Field1_label')
-      expect(subject[1]).to eq(name: 'Field2__c', label: 'Field2_label')
+      expect(subject.length).to eq(5)
+      expect(subject[0][:name]).to eq('Field1__c')
+      expect(subject[1][:name]).to eq('Field2__c')
+      expect(subject[2][:name]).to eq('Field3__c')
+      expect(subject[3][:name]).to eq('Field4__c')
+      expect(subject[4][:name]).to eq('Field5__c')
     end
   end
 

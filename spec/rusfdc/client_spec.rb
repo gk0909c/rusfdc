@@ -31,10 +31,15 @@ RSpec.describe Rusfdc::Client do
 
     it 'print field list to standard out' do
       out_format = "name: %s label: %s\n"
-      out1 = format(out_format, 'Field1__c'.ljust(30), 'Field1_label')
-      out2 = format(out_format, 'Field2__c'.ljust(30), 'Field2_label')
+      expect = [
+        %w(Field1__c Field1_label),
+        %w(Field2__c Field2_label),
+        %w(Field3__c Field3_label),
+        %w(Field4__c Field4_label),
+        %w(Field5__c Field5_label)
+      ].map { |a| format(out_format, a[0].ljust(30), a[1]) }.join
 
-      expect { subject }.to output([out1, out2].join).to_stdout
+      expect { subject }.to output(expect).to_stdout
     end
   end
 

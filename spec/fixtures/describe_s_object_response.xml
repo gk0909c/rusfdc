@@ -5,10 +5,15 @@
         <fields>
           <name>Field1__c</name>
           <label>Field1_label</label>
+          <type>string</type>
+          <length>20</length>
+          <nillable>false</nillable>
         </fields>
         <fields>
           <name>Field2__c</name>
           <label>Field2_label</label>
+          <type>reference</type>
+          <nillable>true</nillable>
         </fields>
         <childRelationships>
           <childSObject>ChildObj1__c</childSObject>
@@ -18,6 +23,28 @@
           <childSObject>ChildObj2__c</childSObject>
           <relationshipName>ChildObj2s__r</relationshipName>
         </childRelationships>
+        <fields>
+          <name>Field3__c</name>
+          <label>Field3_label</label>
+          <type>double</type>
+          <precision>5</precision>
+          <scale>2</scale>
+          <nillable>true</nillable>
+        </fields>
+        <fields>
+          <name>Field4__c</name>
+          <label>Field4_label</label>
+          <type>string</type>
+          <length>30</length>
+          <nillable>true</nillable>
+        </fields>
+        <fields>
+          <name>Field5__c</name>
+          <label>Field5_label</label>
+          <type>string</type>
+          <length>40</length>
+          <nillable>true</nillable>
+        </fields>
       </result>
     </describe_s_object_response>
   </soap:Body>
