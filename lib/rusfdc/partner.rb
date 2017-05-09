@@ -45,5 +45,15 @@ module Rusfdc
       raise "found no relation between #{parent} and {#child}" unless relationship
       relationship[:relationship_name]
     end
+
+    def retrieve_layouts_of(object_name)
+      response = @client.call(
+        :describe_layout,
+        message: {
+          s_object_type: object_name
+        }
+      )
+      response.body[:describe_layout_response][:result]
+    end
   end
 end
