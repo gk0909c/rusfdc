@@ -8,6 +8,7 @@
             <layout_rows>
               <layout_items>
                 <label>Field1</label>
+                <required>false</required>
                 <layout_components>
                   <type>Field</type>
                   <value>Field1__c</value>
@@ -15,6 +16,7 @@
               </layout_items>
               <layout_items>
                 <label>Field2</label>
+                <required>true</required>
                 <layout_components>
                   <type>Field</type>
                   <value>Field2__c</value>
@@ -24,6 +26,7 @@
             <layout_rows>
               <layout_items>
                 <label>Field3</label>
+                <required>false</required>
                 <layout_components>
                   <type>Field</type>
                   <value>Field3__c</value>
@@ -31,6 +34,7 @@
               </layout_items>
               <layout_items>
                 <label>Field4</label>
+                <required>false</required>
                 <layout_components>
                   <type>Field</type>
                   <value>Field4__c</value>
@@ -44,6 +48,7 @@
             <layout_rows>
               <layout_items>
                 <label>Field5</label>
+                <required>false</required>
                 <layout_components>
                   <type>Field</type>
                   <value>Field5__c</value>
@@ -51,6 +56,7 @@
               </layout_items>
               <layout_items>
                 <label></label>
+                <required>false</required>
               </layout_items>
             </layout_rows>
             <rows>1</rows>

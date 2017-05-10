@@ -1,5 +1,6 @@
 require 'rusfdc/version'
 require 'rusfdc/client'
+require 'rusfdc/describes/detail_layout'
 
 # salesforce operation via ruby
 module Rusfdc
