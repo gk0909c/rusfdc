@@ -45,6 +45,13 @@
           <length>40</length>
           <nillable>true</nillable>
         </fields>
+        <fields>
+          <name>CreatedById</name>
+          <label>作成者 ID</label>
+          <type>reference</type>
+          <length>18</length>
+          <nillable>false</nillable>
+        </fields>
       </result>
     </describe_s_object_response>
   </soap:Body>

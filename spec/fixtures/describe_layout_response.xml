@@ -55,8 +55,20 @@
                 </layout_components>
               </layout_items>
               <layout_items>
-                <label></label>
+                <label>作成者</label>
                 <required>false</required>
+                <layout_components>
+                  <type>Field</type>
+                  <value>CreatedById</value>
+                </layout_components>
+                <layout_components>
+                  <type>Separator</type>
+                  <value>, </value>
+                </layout_components>
+                <layout_components>
+                  <type>Field</type>
+                  <value>CreatedDate</value>
+                </layout_components>
               </layout_items>
             </layout_rows>
             <rows>1</rows>

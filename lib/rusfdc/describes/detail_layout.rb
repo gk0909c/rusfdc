@@ -40,6 +40,7 @@ module Rusfdc
           comp = item[:layout_components]
           l = LayoutItem.new(item[:label], item[:required])
           if comp
+            comp = comp[0] if comp.instance_of?(Array)
             l.type = comp[:type]
             l.field = comp[:value]
           end

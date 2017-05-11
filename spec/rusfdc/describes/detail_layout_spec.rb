@@ -34,11 +34,15 @@ RSpec.describe Rusfdc::Describes::DetailLayout do
       end
 
       items = subject[1][:items]
-      expect(items.count).to eq(1)
+      expect(items.count).to eq(2)
       expect(items[0].label).to eq('Field5')
       expect(items[0].required).to be_falsey
       expect(items[0].field).to eq('Field5__c')
       expect(items[0].type).to eq('Field')
+      expect(items[1].label).to eq('作成者')
+      expect(items[1].required).to be_falsey
+      expect(items[1].field).to eq('CreatedById')
+      expect(items[1].type).to eq('Field')
     end
 
     it 'return layouted fields list with field info' do
@@ -49,6 +53,7 @@ RSpec.describe Rusfdc::Describes::DetailLayout do
       expect(items[3].field_type).to eq('string')
 
       expect(subject[1][:items][0].field_type).to eq('string')
+      expect(subject[1][:items][1].field_type).to eq('reference')
     end
   end
 end
