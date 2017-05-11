@@ -71,7 +71,7 @@ module Rusfdc
       target = options[:name]
       p = create_partner_client(options[:config])
       l = Rusfdc::Describes::DetailLayout.new(p.retrieve_layouts_of(target))
-      l_f = l.merge_fields(p.retrieve_fields_of(target))
+      l_f = l.merge_fields_with_hash(p.retrieve_fields_of(target))
 
       out_file = "#{target}_layout_info.json"
       out_pretty_json(l_f, out_file)

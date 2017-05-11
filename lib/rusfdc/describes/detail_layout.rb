@@ -9,10 +9,17 @@ module Rusfdc
       end
 
       def merge_fields(fields)
-        # extract layout info
         sections = extract_detail_layout_info
         merge_fields_to_detail_layout(sections, fields)
         sections
+      end
+
+      def merge_fields_with_hash(fields)
+        r = merge_fields(fields)
+        r.each do |s|
+          s[:items] = s[:items].map(&:to_h)
+        end
+        r
       end
 
       private

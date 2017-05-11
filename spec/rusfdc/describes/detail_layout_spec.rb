@@ -56,4 +56,29 @@ RSpec.describe Rusfdc::Describes::DetailLayout do
       expect(subject[1][:items][1].field_type).to eq('reference')
     end
   end
+
+  describe '#merge_fields_with_hash' do
+    let(:fields) { partner.retrieve_fields_of(obj) }
+    subject { detail_layout.merge_fields_with_hash(fields) }
+
+    before { expect_describe_s_object_with(obj) }
+
+    it 'return layouted fields per session' do
+      expect(subject.count).to eq(2)
+    end
+
+    it 'return hashed layout item info' do
+      items = subject[0][:items]
+      expect(items.count).to eq(4)
+
+      # assert Field1 - Field4
+      items.each_with_index do |i, idx|
+        expect(i.class).to be(Hash)
+        expect(i[:label]).to eq("Field#{idx + 1}")
+        expect(i[:required]).to eq(idx == 1 ? true : false) # only Field2 is required
+        expect(i[:field]).to eq("Field#{idx + 1}__c")
+        expect(i[:type]).to eq('Field')
+      end
+    end
+  end
 end
