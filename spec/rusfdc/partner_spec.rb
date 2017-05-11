@@ -30,12 +30,13 @@ RSpec.describe Rusfdc::Partner do
     end
 
     it 'return fields of object' do
-      expect(subject.length).to eq(5)
+      expect(subject.length).to eq(6)
       expect(subject[0][:name]).to eq('Field1__c')
       expect(subject[1][:name]).to eq('Field2__c')
       expect(subject[2][:name]).to eq('Field3__c')
       expect(subject[3][:name]).to eq('Field4__c')
       expect(subject[4][:name]).to eq('Field5__c')
+      expect(subject[5][:name]).to eq('CreatedById')
     end
   end
 

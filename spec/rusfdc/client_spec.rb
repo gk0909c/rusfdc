@@ -36,7 +36,8 @@ RSpec.describe Rusfdc::Client do
         %w(Field2__c Field2_label),
         %w(Field3__c Field3_label),
         %w(Field4__c Field4_label),
-        %w(Field5__c Field5_label)
+        %w(Field5__c Field5_label),
+        ['CreatedById', '作成者 ID']
       ].map { |a| format(out_format, a[0].ljust(30), a[1]) }.join
 
       expect { subject }.to output(expect).to_stdout

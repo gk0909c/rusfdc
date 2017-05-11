@@ -24,16 +24,12 @@ module Rusfdc
         end
 
         def extract_items(section)
-          section[:layout_rows].flat_map do |r|
-            extract_item(r)
-          end
-        end
+          rows = section[:layout_rows]
+          rows = [rows] if section[:rows].to_i == 1
 
-        def extract_item(row)
-          # when section has some rows, row is expressed as hash has layout_items array
-          # when section has only one row, row is expressed as [tag_anem, [item, item]]
-          items = row.instance_of?(Hash) ? row[:layout_items] : row[1]
-          items.select { |i| i[:label] }.map { |i| layout_item_info(i) }
+          rows.flat_map do |r|
+            r[:layout_items].select { |i| i[:label] }.map { |i| layout_item_info(i) }
+          end
         end
 
         def layout_item_info(item)
