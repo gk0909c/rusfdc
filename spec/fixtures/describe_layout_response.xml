@@ -33,6 +33,9 @@
                   <value>Field3__c</value>
                 </layout_components>
               </layout_items>
+              <num_items>1</num_items>
+            </layout_rows>
+            <layout_rows>
               <layout_items>
                 <label>Field4</label>
                 <required>false</required>
@@ -41,7 +44,7 @@
                   <value>Field4__c</value>
                 </layout_components>
               </layout_items>
-              <num_items>2</num_items>
+              <num_items>1</num_items>
             </layout_rows>
             <rows>2</rows>
           </detail_layout_sections>

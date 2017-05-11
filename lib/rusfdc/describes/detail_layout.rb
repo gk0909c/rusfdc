@@ -24,12 +24,16 @@ module Rusfdc
         end
 
         def extract_items(section)
-          rows = section[:layout_rows]
-          rows = [rows] if section[:rows].to_i == 1
-
+          rows = if_single_wrap_array(section[:layout_rows], section[:rows])
           rows.flat_map do |r|
-            r[:layout_items].select { |i| i[:label] }.map { |i| layout_item_info(i) }
+            items = if_single_wrap_array(r[:layout_items], r[:num_items])
+            items.select { |i| i[:label] }.map { |i| layout_item_info(i) }
           end
+        end
+
+        def if_single_wrap_array(target, num_element)
+          target = [target] if num_element.to_i == 1
+          target
         end
 
         def layout_item_info(item)
