@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.shared_examples 'merge fields' do
-  it 'return layouted fields per session' do
+  it 'return layouted fields per section' do
     expect(subject.count).to eq(2)
     expect(subject[0][:name]).to eq('セクション１')
     expect(subject[1][:name]).to eq('セクション２')
