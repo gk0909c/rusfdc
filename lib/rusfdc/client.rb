@@ -3,6 +3,7 @@ require 'thor'
 require 'rusfdc/connection'
 require 'rusfdc/partner'
 require 'rusfdc/rest'
+require 'rusfdc/describes/detail_layout'
 
 module Rusfdc
   # provide command line interface
@@ -59,6 +60,21 @@ module Rusfdc
       template = r.generate_nested_record_template(param)
       out_file = "#{parent}_and_#{child}_#{now_str}.json"
       out_pretty_json(template, out_file)
+
+      puts "success! result is in #{out_file}"
+    end
+
+    desc 'retrieve_layout_with_field_info', 'retrieve standard layout info to json file'
+    method_option(*config_option)
+    option :name, type: :string, aliases: '-n', desc: 'custom object name', required: true
+    def retrieve_layout_with_field_info
+      target = options[:name]
+      p = create_partner_client(options[:config])
+      l = Rusfdc::Describes::DetailLayout.new(p.retrieve_layouts_of(target))
+      l_f = l.merge_fields(p.retrieve_fields_of(target))
+
+      out_file = "#{target}_layout_info.json"
+      out_pretty_json(l_f, out_file)
 
       puts "success! result is in #{out_file}"
     end

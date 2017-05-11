@@ -93,4 +93,26 @@ RSpec.describe Rusfdc::Client do
       expect(File.exist?(out_file)).to be_truthy
     end
   end
+
+  describe '#retrieve_layout_with_field_info' do
+    let(:target) { 'Obj__c' }
+    let(:out_file) { "#{target}_layout_info.json" }
+    subject { Rusfdc::Client.new.invoke(:retrieve_layout_with_field_info, [], name: target) }
+
+    before do
+      expect_describe_layout_of(target)
+      expect_describe_s_object_with(target)
+    end
+    after { File.delete(out_file) }
+
+    it 'print success message' do
+      output = "success! result is in #{out_file}\n"
+      expect { subject }.to output(output).to_stdout
+    end
+
+    it 'create nested record template file' do
+      subject
+      expect(File.exist?(out_file)).to be_truthy
+    end
+  end
 end
