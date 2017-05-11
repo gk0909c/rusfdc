@@ -1,19 +1,22 @@
 #!/bin/bash
 
-rusfdc_methods='list_custom_object list_object_field create_nested_record generate_nested_record_template'
+rusfdc_methods='list_custom_object list_object_field create_nested_record generate_nested_record_template retrieve_layout_with_field_info'
 list_object_field_opts='--name'
 create_nested_record_opts='--name --file'
 generate_nested_record_template_opts='--parent --child'
+retrieve_layout_with_field_info_opts='--name'
 
 get_rusfdc_opts() {
   local opts
   target=$1
 
   case ${target} in
+    help) opts=$rusfdc_methods ;;
     rusfdc) opts=$rusfdc_methods ;;
     list_object_field) opts=$list_object_field_opts ;;
     create_nested_record) opts=$create_nested_record_opts ;;
     generate_nested_record_template) opts=$generate_nested_record_template_opts ;;
+    retrieve_layout_with_field_info) opts=$retrieve_layout_with_field_info_opts ;;
     *) opts='' ;;
   esac
 
